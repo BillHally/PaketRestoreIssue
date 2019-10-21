@@ -8,6 +8,18 @@ open Fake.Core.TargetOperators
 
 Target.initEnvironment ()
 
-Target.create "PaketRestore" (fun _ -> Paket.restore id)
+Target.create
+    "PaketRestore"
+    (
+        fun _ ->
+            Paket.restore
+                (
+                    fun p ->
+                        {
+                            p with
+                                ForceDownloadOfPackages = true
+                        }
+                )
+    )
 
 Target.runOrDefault "PaketRestore"
